@@ -11,31 +11,35 @@ export const App = () => {
   });
   const [filter, setFilter] = useState('');
 
-  
   useEffect(() => {
     contacts && localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
   const createContact = contact => {
-    const double = contacts.find(
-      item => item.name.toLocaleLowerCase() === contact.name.toLocaleLowerCase()
-    );
-
-    if (double) {
-      return alert(`${contact.name} is already in contacts`);
+    if(contacts !== '') {
+      const double = contacts.find(
+        item => item.name.toLocaleLowerCase() === contact.name.toLocaleLowerCase()
+      );
+      if (double) {
+        return alert(`${contact.name} is already in contacts`);
+      }
+      contact.id = nanoid();
+      setContacts(prev => {
+        return [...prev, contact];
+      });
     }
-    contact.id = nanoid();
 
-    setContacts(prev => {
-      return [...prev, contact];
-    });
+   
   };
 
   const getContacts = () => {
     const filterContact = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filterContact)
-    );
+    if(contacts !== '') {
+      return contacts.filter(contact =>
+        contact.name.toLowerCase().includes(filterContact)
+      );
+    }
+   
   };
 
   const deleteContact = id => {
