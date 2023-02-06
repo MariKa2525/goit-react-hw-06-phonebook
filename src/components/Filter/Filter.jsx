@@ -5,8 +5,8 @@ export const Filter = ({ value, changeFilterValue }) => {
   return (
     <>
       <div className={css.container}>
-        <label>
-          <p>Find contacts by name</p>
+        <label className={css.label}>
+          Find contacts by name
           <input
             className={css.input}
             type="text"

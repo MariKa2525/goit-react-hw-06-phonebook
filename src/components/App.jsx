@@ -1,19 +1,15 @@
-import { useState, useEffect } from 'react';
 import css from './App.module.css';
 import { ContactForm } from './ContactForm/ContactForm';
 import { nanoid } from 'nanoid';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact, deleteContact, filterContact } from '../redux/sliceContacts';
 
 export const App = () => {
-  const [contacts, setContacts] = useState(() => {
-    return JSON.parse(window.localStorage.getItem('contacts')) ?? '';
-  });
-  const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    contacts && localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+const dispatch = useDispatch();
+const contacts = useSelector(state => state.contacts);
+  const filter = useSelector(state => state.filter);
 
   const createContact = contact => {
     if(contacts !== '') {
@@ -24,43 +20,42 @@ export const App = () => {
         return alert(`${contact.name} is already in contacts`);
       }
       contact.id = nanoid();
-      setContacts(prev => {
-        return [...prev, contact];
-      });
+      dispatch(addContact(contact));
     }
-
-   
   };
 
   const getContacts = () => {
-    const filterContact = filter.toLowerCase();
+    const filterContactValue = filter.toLowerCase();
     if(contacts !== '') {
       return contacts.filter(contact =>
-        contact.name.toLowerCase().includes(filterContact)
+        contact.name.toLowerCase().includes(filterContactValue)
       );
     }
-   
   };
 
-  const deleteContact = id => {
-    setContacts(prev => {
-      return prev.filter(contact => contact.id !== id);
-    });
-  };
+  const deleteContacts = id => dispatch(deleteContact(id))
 
   const changeFilterValue = evt => {
-    setFilter(evt.currentTarget.value);
+    dispatch(filterContact(evt.target.value));
   };
 
   return (
-    <div className={css.container}>
+    <main className={css.container}>
+      <header className={css.wrapper}>
+      <section className={css.section}>
       <h1 className={css.title}>Phonebook</h1>
+      </section>
+      </header>
+      <section className={css.section}>
       <ContactForm createContact={createContact} />
-      <div className={css.container}>
+      <div className={css.wrap}>
         <h2 className={css.title}>Contacts</h2>
+        </div>
         <Filter value={filter} changeFilterValue={changeFilterValue} />
-        <ContactList contacts={getContacts()} deleteContact={deleteContact} />
-      </div>
-    </div>
+        <ContactList contacts={getContacts()} deleteContact={deleteContacts} />
+      
+      </section>
+    
+    </main>
   );
 };

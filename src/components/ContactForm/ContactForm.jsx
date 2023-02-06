@@ -28,6 +28,7 @@ export const ContactForm = ({ createContact }) => {
 
   return (
     <form className={css.form} onSubmit={handleSubmit}>
+      <div className={css.wrap}>
       <label className={css.label} htmlFor="exampleNameInputId">
         {' '}
         Name
@@ -56,9 +57,12 @@ export const ContactForm = ({ createContact }) => {
           required
         />
       </label>
+      </div>
+      <div className={css.wrap}>
       <button className={css.button} type="submit">
         Add Contacts
       </button>
+      </div>
     </form>
   );
 };

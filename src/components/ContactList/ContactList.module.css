@@ -1,9 +1,7 @@
 .list {
-    width: 800px;
     display: flex;
     flex-direction: column;
     margin-top: auto;
-    margin-left: 130px;
     margin-bottom: 30px;
     font-weight: 700;
     font-size: 20px;
@@ -14,4 +12,8 @@
 .item {
     display: flex;
     align-items: center;
+}
+
+.item + .item {
+    border-top: 1px solid #2f2f37;
 }
