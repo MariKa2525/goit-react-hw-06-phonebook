@@ -4,10 +4,9 @@ import css from './Contact.module.css';
 export const Contact = ({ name, number, id, deleteContact }) => {
   return (
     <>
-      <p className={css.text}>
-        {name}: </p>
-        <span className={css.text}> {number} </span>
-      
+      <p className={css.text}>{name}: </p>
+      <span className={css.text}> {number} </span>
+
       <button
         className={css.btn}
         type="button"
