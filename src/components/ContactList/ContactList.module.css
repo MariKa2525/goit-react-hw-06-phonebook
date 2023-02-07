@@ -1,6 +1,7 @@
 .list {
     display: flex;
     flex-direction: column;
+    padding: 0;
     margin-top: auto;
     margin-bottom: 30px;
     font-weight: 700;
@@ -15,5 +16,5 @@
 }
 
 .item + .item {
-    border-top: 1px solid #2f2f37;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
